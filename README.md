@@ -1,3 +1,3 @@
 # test-semantic-release
 
-TEST 1
+TEST 2
