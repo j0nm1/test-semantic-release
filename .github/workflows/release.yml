@@ -9,7 +9,9 @@ jobs:
   checkout:
     name: Checkout
     runs-on: self-hosted
-    container: node:16
+    container: 
+      image: node:16
+      options: --user 1000
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -20,7 +22,9 @@ jobs:
     name: Build Docker Image
     runs-on: self-hosted
     needs: [checkout]
-    container: gcr.io/kaniko-project/executor:debug
+    container: 
+      image: gcr.io/kaniko-project/executor:debug
+      options: --user 1000
     steps:
       - name: Build image
         run: /kaniko/executor --context . --dockerfile Dockerfile --no-push
@@ -31,14 +35,12 @@ jobs:
     name: Release
     runs-on: self-hosted
     needs: [build]
-    container: node:16
+    container: 
+      image: node:16
+      options: --user 1000
     steps:
       - name: List
         run: ls -al
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
