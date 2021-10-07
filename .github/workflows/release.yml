@@ -23,7 +23,9 @@ jobs:
     container: gcr.io/kaniko-project/executor:debug
     steps:
       - name: Build image
-        run:  /kaniko/executor --context . --dockerfile Dockerfile --no-push
+        run: /kaniko/executor --context . --dockerfile Dockerfile --no-push
+      - name: Echo 
+        run: echo test > test
 
   release:
     name: Release
@@ -31,6 +33,8 @@ jobs:
     needs: [build]
     container: node:16
     steps:
+      - name: List
+        run: ls -al
       - name: Checkout
         uses: actions/checkout@v2
         with:
