@@ -6,19 +6,20 @@ on:
       - dev
       - qa
 jobs:
-  checkout:
-    name: Checkout
+  build:
+    name: Build Docker Image
     runs-on: self-hosted
-    container: node:16
+    container: gcr.io/kaniko-project/executor:debug
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - name: Build image
+        run:  /kaniko/executor --context . --dockerfile Dockerfile --no-push
 
   release:
     name: Release
     runs-on: self-hosted
+    needs: [build]
     container: node:16
     steps:
       - name: Checkout
