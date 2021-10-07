@@ -6,6 +6,16 @@ on:
       - dev
       - qa
 jobs:
+  checkout:
+    name: Checkout
+    runs-on: self-hosted
+    container: node:16
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
   release:
     name: Release
     runs-on: self-hosted
