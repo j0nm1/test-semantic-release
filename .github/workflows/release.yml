@@ -9,7 +9,7 @@ jobs:
   release:
     name: Release
     runs-on: self-hosted
-    container: node:14.16
+    container: node:16
     steps:
       - name: Checkout
         uses: actions/checkout@v2
